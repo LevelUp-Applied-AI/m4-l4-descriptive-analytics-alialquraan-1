@@ -1,39 +1,36 @@
-1. Dataset Description
+## 1. Dataset Description
 The dataset consists of academic records from Hashemite Technical University (HTU).
+* **Shape:** The dataset contains **2000 students** and 10 columns.
+* **Data Types:** A mix of categorical (str) and numerical (float64/int64) data.
+* **Data Quality Issues:** * **commute_minutes:** Missing in 181 rows (9.05%). These were imputed with the median (25.0 minutes).
+    * **scholarship:** Missing in 389 rows (19.45%). These represent students with "None" or unspecified status.
+    * **study_hours_weekly:** Cleaned to ensure no null values remained in the analysis.
 
-Shape: The dataset contains [Insert Row Count] students and 10 columns.
+## 2. Key Distribution Findings
+* **GPA Distribution:** The mean GPA is **2.77**, with a minimum of 1.31 and a maximum of 4.0. The distribution is relatively normal but slightly centered around the 2.78 median. (See `output/gpa_distribution.png`).
+* **Departmental Differences:** The box plot analysis reveals that GPA is consistently distributed across departments with no extreme variations in the median. (See `output/gpa_by_department.png`).
+* **Commute Time:** The average student commutes for about **25.5 minutes**, but some students face commutes up to 79 minutes.
 
-Columns: student_id, department, semester, course_load, study_hours_weekly, gpa, attendance_pct, has_internship, commute_minutes, and scholarship.
+## 3. Notable Correlations
+* **Study Hours vs. GPA:** A clear positive trend exists. The average student studies **14.88 hours** per week.
+* **Attendance:** The average attendance rate is **77.4%**, which shows a moderate positive relationship with academic success. (See `output/correlation_heatmap.png`).
+* **Caveat:** Correlation does not imply causation; while high study hours correlate with high GPAs, other factors like prior knowledge may also contribute.
 
-Data Quality Issues:
+## 4. Hypothesis Test Results
 
-Missing Values: Found in commute_minutes (approximately 10%) and study_hours_weekly.
+### Hypothesis 1: Internship Impact on GPA
+* **Hypothesis:** Students with internships have a significantly different GPA than those without.
+* **Test Used:** Independent Samples T-test.
+* **Results:** **t = 13.5644, p = 0.0000**.
+* **Interpretation:** **Statistically Significant.** Students with internships perform significantly better academically. The zero p-value indicates that this result is highly reliable and not due to random chance.
 
-Handling: commute_minutes was imputed using the median to minimize the impact of outliers. Rows with missing study_hours_weekly were dropped as they represented a small percentage (<5%) of the data.
+### Hypothesis 2: GPA Variation Across Departments
+* **Hypothesis:** Does GPA differ significantly across the various university departments?
+* **Test Used:** ANOVA (One-way).
+* **Results:** **F = 0.6671, p = 0.6148**.
+* **Interpretation:** **Not Significant.** Since the p-value (0.61) is much higher than 0.05, we conclude that there is no meaningful difference in GPA between departments.
 
-
-2. Key Distribution Findings
-GPA Distribution: The GPA follows a slightly left-skewed distribution, indicating that a majority of students maintain a GPA above 2.5. (See output/gpa_distribution.png).
-
-Departmental Differences: The box plot analysis reveals that the Computer Science and Engineering departments show a higher median GPA compared to others, though they also exhibit more outliers on the lower end. (See output/gpa_by_department.png).
-
-Study Hours: Most students report studying between 10 to 20 hours weekly, with a sharp drop-off after 25 hours.
-
-
-3. Notable CorrelationsStudy Hours vs. GPA: A strong positive correlation ($r \approx 0.65$) was observed. This suggests that as self-reported study hours increase, GPA tends to rise.Attendance vs. GPA: A moderate correlation ($r \approx 0.45$) exists, highlighting the importance of physical presence in lectures.Caveat: It is crucial to remember that correlation is not causation. For instance, high-achieving students might be more inclined to study longer hours, rather than study hours being the sole cause of high grades. (See output/correlation_heatmap.png).
-
-
-4. Hypothesis Test ResultsHypothesis
-
-1: Internship Impact on GPAHypothesis: Students with internships have a significantly different GPA than those without.Test Used: Independent Samples T-test.Results: $t = 2.45$, $p = 0.015$, Cohen’s $d = 0.35$.Interpretation: The result is statistically significant ($p < 0.05$). Students with internships have higher average GPAs. The effect size ($d = 0.35$) suggests a small to medium practical impact.
-
-
-Hypothesis 2: Scholarship Status and DepartmentHypothesis: There is an association between the student's department and the type of scholarship received.Test Used: Chi-Square Test of Independence.Results: $\chi^2 = 15.2$, $p = 0.08$.Interpretation: The result is not statistically significant ($p > 0.05$). This suggests that scholarship distribution is relatively fair across all departments at HTU.
-
-
-5. Actionable Recommendations
-Expand Internship Integration: Since the data shows students with internships perform better academically (Hypothesis 1), the university should make internships a mandatory or credit-bearing component for all departments, not just Engineering.
-
-Targeted Academic Support for Commuters: Based on the negative correlation trend between commute_minutes and attendance_pct, the university should consider offering more hybrid learning options or flexible scheduling for students with commutes exceeding 45 minutes to protect their GPA.
-
-Study-Skills Workshops: Given that study_hours_weekly is the strongest predictor of GPA, the university should implement "Efficient Studying" workshops. The goal is to help students in departments with lower average GPAs (identified in output/gpa_by_department.png) optimize their study time for better results.
+## 5. Actionable Recommendations
+1. **Mandatory Internship Credits:** Given the high t-statistic (13.56) for internships, the university should integrate mandatory internships to boost overall student GPA.
+2. **Attendance Intervention:** With an average attendance of 77%, the university should implement an early warning system for students dropping below 70% to prevent GPA decline.
+3. **Commuter Support:** Since nearly 10% of data was missing for commute times and some students travel up to 79 minutes, offering hybrid lectures could help those with long commutes maintain their performance.
